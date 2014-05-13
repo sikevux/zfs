@@ -61,6 +61,8 @@
 #undef ZFS_MAXNAMELEN
 #include <libzfs.h>
 
+#include "zdb_util.h"
+
 #define	ZDB_COMPRESS_NAME(idx) ((idx) < ZIO_COMPRESS_FUNCTIONS ?	\
 	zio_compress_table[(idx)].ci_name : "UNKNOWN")
 #define	ZDB_CHECKSUM_NAME(idx) ((idx) < ZIO_CHECKSUM_FUNCTIONS ?	\
@@ -1410,9 +1412,7 @@ dump_znode_sa_xattr(sa_handle_t *hdl)
 	if (error || sa_xattr_size == 0)
 		return;
 
-	sa_xattr_packed = malloc(sa_xattr_size);
-	if (sa_xattr_packed == NULL)
-		return;
+	sa_xattr_packed = safe_malloc(sa_xattr_size);
 
 	error = sa_lookup(hdl, sa_attr_table[ZPL_DXATTR],
 	    sa_xattr_packed, sa_xattr_size);
@@ -1906,11 +1906,7 @@ dump_cachefile(const char *cachefile)
 		exit(1);
 	}
 
-	if ((buf = malloc(statbuf.st_size)) == NULL) {
-		(void) fprintf(stderr, "failed to allocate %llu bytes\n",
-		    (u_longlong_t)statbuf.st_size);
-		exit(1);
-	}
+	buf = safe_malloc(statbuf.st_size);
 
 	if (read(fd, buf, statbuf.st_size) != statbuf.st_size) {
 		(void) fprintf(stderr, "failed to read %llu bytes\n",
@@ -1971,7 +1967,7 @@ dump_label(const char *dev)
 
 	if (strncmp(dev, "/dev/dsk/", 9) == 0) {
 		len++;
-		path = malloc(len);
+		path = safe_malloc(len);
 		(void) snprintf(path, len, "%s%s", "/dev/rdsk/", dev + 9);
 	} else {
 		path = strdup(dev);
