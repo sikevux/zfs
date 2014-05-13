@@ -20,7 +20,9 @@ zed_SOURCES = \
 	$(top_srcdir)/cmd/zed/zed_log.c \
 	$(top_srcdir)/cmd/zed/zed_log.h \
 	$(top_srcdir)/cmd/zed/zed_strings.c \
-	$(top_srcdir)/cmd/zed/zed_strings.h
+	$(top_srcdir)/cmd/zed/zed_strings.h \
+	$(top_srcdir)/cmd/zed/zed_util.c \
+	$(top_srcdir)/cmd/zed/zed_util.h
 
 zed_LDADD = \
 	$(top_builddir)/lib/libavl/libavl.la \

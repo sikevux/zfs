@@ -36,6 +36,7 @@
 #include "zed_file.h"
 #include "zed_log.h"
 #include "zed_strings.h"
+#include "zed_util.h"
 
 #define	ZEVENT_FILENO	3
 

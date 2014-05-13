@@ -32,6 +32,7 @@
 #include <sys/avl.h>
 #include <sys/sysmacros.h>
 #include "zed_strings.h"
+#include "zed_util.h"
 
 struct zed_strings {
 	avl_tree_t tree;
