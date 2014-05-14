@@ -36,6 +36,8 @@
 #include <sys/zfs_ioctl.h>
 #include <zfs_fletcher.h>
 
+#include "zstreamdump_util.h"
+
 uint64_t drr_record_count[DRR_NUMTYPES];
 uint64_t total_write_size = 0;
 uint64_t total_stream_len = 0;
@@ -80,7 +82,7 @@ ssread(void *buf, size_t len, zio_cksum_t *cksum)
 int
 main(int argc, char *argv[])
 {
-	char *buf = malloc(INITIAL_BUFLEN);
+	char *buf = safe_malloc(INITIAL_BUFLEN);
 	dmu_replay_record_t thedrr;
 	dmu_replay_record_t *drr = &thedrr;
 	struct drr_begin *drrb = &thedrr.drr_u.drr_begin;
@@ -213,7 +215,7 @@ main(int argc, char *argv[])
 
 				if (sz > 1<<20) {
 					free(buf);
-					buf = malloc(sz);
+					buf = safe_malloc(sz);
 				}
 				(void) ssread(buf, sz, &zc);
 				if (ferror(send_stream))
