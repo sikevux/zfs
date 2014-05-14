@@ -784,6 +784,22 @@ process_options(int argc, char **argv)
 	}
 }
 
+/*
+ * Utility function to guarantee malloc() success
+ */
+void *
+safe_malloc(size_t size)
+{
+	void *data;
+
+	if ((data = calloc(1, size)) == NULL) {
+		(void) fprintf(stderr, "internal error: out of memory\n");
+		exit(1);
+	}
+
+	return (data);
+}
+
 static void
 ztest_kill(ztest_shared_t *zs)
 {
@@ -2709,7 +2725,7 @@ ztest_split_pool(ztest_ds_t *zd, uint64_t id)
 	VERIFY(nvlist_lookup_nvlist_array(tree, ZPOOL_CONFIG_CHILDREN, &child,
 	    &children) == 0);
 
-	schild = malloc(rvd->vdev_children * sizeof (nvlist_t *));
+	schild = safe_malloc(rvd->vdev_children * sizeof (nvlist_t *));
 	for (c = 0; c < children; c++) {
 		vdev_t *tvd = rvd->vdev_child[c];
 		nvlist_t **mchild;
