@@ -160,9 +160,7 @@ args_init(int argc, char **argv)
 	}
 
 	/* Configure and populate the args structures */
-	args = malloc(sizeof (*args));
-	if (args == NULL)
-		return (NULL);
+	args = safe_malloc(sizeof (*args));
 
 	memset(args, 0, sizeof (*args));
 
@@ -419,11 +417,7 @@ dev_init(void)
 		goto error;
 
 	zpios_buffer_size = rc;
-	zpios_buffer = (char *)malloc(zpios_buffer_size);
-	if (zpios_buffer == NULL) {
-		rc = ENOMEM;
-		goto error;
-	}
+	zpios_buffer = (char *)safe_malloc(zpios_buffer_size);
 
 	memset(zpios_buffer, 0, zpios_buffer_size);
 	return (0);
@@ -490,9 +484,7 @@ run_one(cmd_args_t *args, uint32_t id, uint32_t T, uint32_t N,
 	cmd_size =
 		sizeof (zpios_cmd_t)
 		+ ((T + N + 1) * sizeof (zpios_stats_t));
-	cmd = (zpios_cmd_t *)malloc(cmd_size);
-	if (cmd == NULL)
-		return (ENOMEM);
+	cmd = (zpios_cmd_t *)safe_malloc(cmd_size);
 
 	memset(cmd, 0, cmd_size);
 	cmd->cmd_magic = ZPIOS_CMD_MAGIC;

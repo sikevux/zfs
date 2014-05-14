@@ -118,5 +118,6 @@ int set_load_params(cmd_args_t *args, char *optarg);
 int check_mutual_exclusive_command_lines(uint32_t flag, char *arg);
 void print_stats_header(cmd_args_t *args);
 void print_stats(cmd_args_t *args, zpios_cmd_t *cmd);
+void *safe_malloc(size_t size);
 
 #endif /* _ZPIOS_H */
