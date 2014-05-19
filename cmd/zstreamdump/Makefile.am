@@ -8,7 +8,8 @@ sbin_PROGRAMS = zstreamdump
 
 zstreamdump_SOURCES = \
 	$(top_srcdir)/cmd/zstreamdump/zstreamdump.c \
-	$(top_srcdir)/cmd/zstreamdump/zstreamdump_util.c
+	$(top_srcdir)/cmd/zstreamdump/zstreamdump_util.c \
+	$(top_srcdir)/cmd/zstreamdump/zstreamdump_util.h
 
 zstreamdump_LDADD = \
 	$(top_builddir)/lib/libnvpair/libnvpair.la \
